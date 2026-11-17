@@ -1,0 +1,22 @@
+{
+  "sourceSha256": "c4917f81d1bb6b44ae59d2a0d5e7285fb8946e65160c39ba7f96b4c8e5a0214a",
+  "sampleRate": 48000,
+  "channels": 1,
+  "bitrate": 192000,
+  "tracks": [
+    {
+      "file": "test-1.mp3",
+      "name": "Pulse",
+      "samples": 2972903,
+      "bytes": 1487852,
+      "sha256": "e06cf2e18eccf7b0f16e7627a78d44567dbf9b4369fac92d2304b0af860241a0"
+    },
+    {
+      "file": "test-2.mp3",
+      "name": "Drift",
+      "samples": 4336941,
+      "bytes": 2169836,
+      "sha256": "a58e722acb5f4195018823254a5b03706ff41d5db055ab89c4dc1827cb1cc74f"
+    }
+  ]
+}

@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="version" content="0.3.0-beta.1">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23000'/%3E%3Cpath d='M4 25h24M5 22l5-6 4 4 5-14 4 11 4-3' fill='none' stroke='%23f0bb68' stroke-width='2'/%3E%3C/svg%3E">
+  <title>Spectrum 3D</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section id="panelDock" aria-labelledby="panelTitle">
+    <header class="dock-head">
+      <button type="button" id="hudRail" class="dock-toggle hud-rail" aria-controls="hud" aria-expanded="false" data-i18n-label="expandHud" hidden>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19h16M6 16v-3M10 16V8M14 16v-6M18 16V5"/></svg>
+      </button>
+      <span id="panelTitle" class="dock-title" data-i18n="controls">控制</span>
+      <button type="button" id="panelToggle" class="dock-toggle" aria-controls="panel" aria-expanded="true" data-i18n-label="collapsePanel">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 7-5 5 5 5"/></svg>
+      </button>
+    </header>
+  <aside id="panel">
+    <div class="panel-main">
+      <section class="panel-sec">
+        <div class="sec-head">
+          <h2 data-i18n="source">音源</h2>
+          <div class="lang-switch" id="langs" role="group">
+            <button type="button" data-lang="zh">中</button>
+            <span class="lang-sep" aria-hidden="true">/</span>
+            <button type="button" data-lang="en">EN</button>
+          </div>
+        </div>
+        <div class="seg" role="group">
+          <button type="button" id="srcSynth">测试音频</button>
+          <button type="button" id="srcInput" data-i18n="input">输入设备</button>
+          <button type="button" id="srcFile" data-i18n="file">音频文件</button>
+        </div>
+        <select id="device" class="device-select" hidden></select>
+        <input id="file" type="file" accept="audio/*" hidden>
+        <div class="source-meta">
+          <span id="status" class="status-text"></span>
+          <label class="check check-inline">
+            <input id="monitor" type="checkbox">
+            <span data-i18n="listen">监听</span>
+          </label>
+        </div>
+        <div id="gamepad" class="gamepad-tag" hidden></div>
+      </section>
+
+      <section class="panel-sec">
+        <div class="sec-head">
+          <h2 data-i18n="display">显示</h2>
+          <button type="button" class="help" data-i18n-tip="layersHint">?</button>
+        </div>
+        <div class="seg" role="group">
+          <button type="button" id="layerSpectrum" data-i18n="layerSpectrum">频谱</button>
+          <button type="button" id="layerWaterfall" data-i18n="layerWaterfall">瀑布</button>
+        </div>
+        <div class="field-row">
+          <span class="field-label" data-i18n="axis">频率轴</span>
+          <div class="seg seg-tiers" id="axisScale" role="group">
+            <button type="button" data-value="log" data-i18n="axisLog">对数</button>
+            <button type="button" data-value="mel">Mel</button>
+          </div>
+          <button type="button" class="help" data-i18n-tip="axisHint">?</button>
+        </div>
+      </section>
+
+      <section class="panel-sec">
+        <div class="sec-head">
+          <h2 data-i18n="view">视角</h2>
+          <button type="button" class="help" data-i18n-tip="viewHint">?</button>
+        </div>
+        <div class="seg" role="group">
+          <button type="button" id="vFront"><span data-i18n="front">正面</span><kbd class="kbd">1</kbd></button>
+          <button type="button" id="vTop"><span data-i18n="top">俯视</span><kbd class="kbd">2</kbd></button>
+          <button type="button" id="vPersp"><span data-i18n="perspective">立体</span><kbd class="kbd">3</kbd></button>
+        </div>
+      </section>
+
+      <section class="panel-sec">
+        <div class="sec-head">
+          <h2 data-i18n="spectrum">频谱</h2>
+        </div>
+        <div class="check-stack">
+          <label class="check">
+            <input id="optPeaks" type="checkbox">
+            <span data-i18n="peaks">主峰读数</span>
+          </label>
+          <div class="check-row-action">
+            <label class="check">
+              <input id="optMaxHold" type="checkbox">
+              <span data-i18n="maxHold">最大值保持</span>
+            </label>
+            <button type="button" id="clearMax" class="btn-compact">
+              <span data-i18n="clear">清零</span><kbd class="kbd">C</kbd>
+            </button>
+          </div>
+          <label class="check">
+            <input id="optPiano" type="checkbox">
+            <span data-i18n="piano">琴键刻度</span>
+          </label>
+          <div class="check-row-action">
+            <label class="check">
+              <input id="optTilt" type="checkbox">
+              <span data-i18n="tilt">倾斜 4.5 dB/oct</span>
+            </label>
+            <button type="button" class="help" data-i18n-tip="tiltHint">?</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel-sec">
+        <div class="sec-head">
+          <h2 data-i18n="look">外观</h2>
+          <button type="button" class="help" data-i18n-tip="lookHint">?</button>
+        </div>
+        <div class="field-stack">
+          <div class="field-row">
+            <label class="field-label" for="visualStyle" data-i18n="visualStyle">风格</label>
+            <select id="visualStyle"></select>
+          </div>
+          <div class="field-row">
+            <label class="field-label" for="style" data-i18n="style">样式</label>
+            <select id="style"></select>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel-sec panel-sec-last">
+        <div class="sec-head">
+          <h2 data-i18n="time">时间</h2>
+          <button type="button" class="help" data-i18n-tip="timeHint">?</button>
+        </div>
+        <div class="field-row">
+          <label class="field-label" for="seconds" data-i18n="inFrame">画面内</label>
+          <input id="seconds" type="range" min="1" max="12" step="1" value="4">
+          <span id="secondsValue" class="slider-val">4 s</span>
+        </div>
+      </section>
+    </div>
+
+    <div class="panel-aux">
+      <details id="advDrawer" class="aux-drawer">
+        <summary class="aux-summary">
+          <svg class="chevron" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+            <path d="M4.2 2.5L7.8 6l-3.6 3.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span data-i18n="advanced">分析与画框</span>
+          <span id="advBadge" class="aux-badge" hidden></span>
+        </summary>
+        <div class="aux-body">
+          <div class="field-row">
+            <label class="field-label" for="renderScale" data-i18n="renderScale">渲染比例</label>
+            <select id="renderScale">
+              <option value="1">100%</option><option value="0.85">85%</option><option value="0.7">70%</option>
+              <option value="auto" data-i18n="renderAuto">自动</option>
+            </select>
+          </div>
+          <div class="field-row">
+            <label class="field-label" for="frame" data-i18n="frame">画框</label>
+            <select id="frame">
+              <option value="full" data-i18n="frameFull">整个窗口</option>
+              <option value="landscape" data-i18n="frameLandscape">手机横屏 640×360</option>
+              <option value="portrait" data-i18n="framePortrait">手机竖屏 360×640</option>
+              <option value="inline" data-i18n="frameInline">竖屏小窗 360×200</option>
+            </select>
+          </div>
+          <div class="field-row">
+            <label class="field-label" for="fft">FFT</label>
+            <select id="fft">
+              <option value="multi" data-i18n="fftMulti">多分辨率 8192/2048/1024</option>
+              <option value="16384">16384</option>
+              <option value="8192">8192</option>
+              <option value="4096">4096</option>
+              <option value="2048">2048</option>
+            </select>
+          </div>
+          <div class="field-row">
+            <span class="field-label" data-i18n="rowRate">行/秒</span>
+            <div class="seg seg-tiers" id="rowRate" role="group"></div>
+            <button type="button" class="help" data-i18n-tip="rowRateHint">?</button>
+          </div>
+          <div class="field-row">
+            <span class="field-label" data-i18n="bandSub">段/半音</span>
+            <div class="seg seg-tiers" id="bandSub" role="group"></div>
+            <button type="button" class="help" data-i18n-tip="bandSubHint">?</button>
+          </div>
+          <div class="check-row-action">
+            <label class="check">
+              <input id="optLowLevel" type="checkbox">
+              <span data-i18n="lowLevel">显示低电平</span>
+            </label>
+            <button type="button" class="help" data-i18n-tip="lowLevelHint">?</button>
+          </div>
+          <div class="check-row-action">
+            <label class="check">
+              <input id="phone" type="checkbox">
+              <span data-i18n="phoneMode">模拟手机数据</span>
+            </label>
+            <button type="button" class="help" data-i18n-tip="analysisHint">?</button>
+          </div>
+        </div>
+      </details>
+
+      <div class="aux-mon">
+        <div class="sec-head">
+          <label class="check mon-master">
+            <input id="monVisible" type="checkbox">
+            <span data-i18n="monitor">监控</span>
+          </label>
+          <div class="head-tools">
+            <kbd class="kbd">M</kbd>
+            <button type="button" class="help" data-i18n-tip="monHint">?</button>
+          </div>
+        </div>
+        <div class="mon-chips" id="monChips">
+          <label class="chip"><input data-mon="frame" type="checkbox"><span data-i18n="monFrame">帧</span></label>
+          <label class="chip"><input data-mon="gpu" type="checkbox"><span>GPU</span></label>
+          <label class="chip"><input data-mon="cpu" type="checkbox"><span>CPU</span></label>
+          <label class="chip"><input data-mon="memory" type="checkbox"><span data-i18n="monMemory">内存</span></label>
+          <label class="chip"><input data-mon="audio" type="checkbox"><span data-i18n="monAudio">音频</span></label>
+        </div>
+      </div>
+
+      <div class="aux-bar">
+        <button type="button" id="btnFreeze" class="util-btn">
+          <span data-i18n="freeze">冻结</span><kbd class="kbd" data-i18n="spaceKey">空格</kbd>
+        </button>
+        <button type="button" id="btnHide" class="util-btn">
+          <span data-i18n="hideUi">收起</span><kbd class="kbd">H</kbd>
+        </button>
+      </div>
+    </div>
+  </aside>
+  </section>
+
+  <main id="world">
+    <div id="stage">
+      <canvas id="view"></canvas>
+      <div id="labels"></div>
+      <div id="peaks"></div>
+      <div id="readout" hidden></div>
+    </div>
+    <div id="frameMeta" class="frame-meta" hidden></div>
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+  </main>
+
+  <section id="hudDock" aria-labelledby="hudTitle">
+    <header class="dock-head">
+      <span id="hudTitle" class="dock-title" data-i18n="monitor">监控</span>
+      <button type="button" id="hudToggle" class="dock-toggle" aria-controls="hud" aria-expanded="true" data-i18n-label="collapseHud">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 9 5 5 5-5"/></svg>
+      </button>
+    </header>
+    <footer id="hud"></footer>
+  </section>
+  <button type="button" id="restoreUi" class="dock-toggle restore-ui" data-i18n-label="restoreUi">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M10 4v16M10 15h10"/></svg>
+    <span data-i18n="restoreUi">恢复界面</span>
+  </button>
+  <div id="tooltip" role="tooltip" hidden></div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

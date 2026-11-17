@@ -1,0 +1,19 @@
+# macOS metadata
+.DS_Store
+
+# Generated at build time by scripts/export-shared.mjs, scripts/shader-migrate.mjs and the
+# Android build (SDK link, Gradle home)
+toolchains/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Rust build
+rust/target/
+
+# Android build and local machine state
+android/.gradle/
+android/.kotlin/
+android/**/build/
+android/local.properties

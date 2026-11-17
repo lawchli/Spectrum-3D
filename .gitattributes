@@ -1,0 +1,15 @@
+# Text is LF in every checkout, Windows included: the shaders, the scripts and the hashes that
+# the build checks all expect LF.
+* text=auto eol=lf
+
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.ico binary
+*.icns binary
+*.rgba binary
+*.wav binary
+*.mp3 binary
+*.jar binary
+*.svf binary
+*.f32 binary

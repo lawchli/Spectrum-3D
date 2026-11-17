@@ -1,0 +1,13 @@
+// Optional acceptance check: consume the built AAR exactly as another app would.
+// Build :spectrum:assembleRelease first, then pass this file via --init-script.
+gradle.afterProject { project, state ->
+    if (project.path == ':app') {
+        def aar = project.rootProject.file('spectrum/build/outputs/aar/spectrum-release.aar')
+        if (!aar.isFile()) throw new GradleException('Build :spectrum:assembleRelease before the AAR consumer check')
+        def implementation = project.configurations.getByName('implementation')
+        implementation.dependencies.removeAll {
+            it instanceof org.gradle.api.artifacts.ProjectDependency && it.dependencyProject.path == ':spectrum'
+        }
+        project.dependencies.add('implementation', project.files(aar))
+    }
+}
