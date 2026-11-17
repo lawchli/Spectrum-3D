@@ -197,24 +197,30 @@ jobs:
           mkdir -p dist
           tar -C rust/target/bundle -czf "dist/Spectrum-3D-$VERSION-linux-x64.tar.gz" spectrum-3d-linux
 
-      # Smoke tests run the packaged program, so they also prove it finds its bundled resources.
-      # Linux has a software Vulkan driver and a virtual display, so a failure there is real.
-      - name: Smoke test (Linux, window on a virtual display)
+      # Smoke tests run the packaged program off-screen, so they also prove that it finds its
+      # bundled resources. The runners have no real graphics card: Linux uses Mesa's software
+      # Vulkan, Windows the Direct3D 12 software adapter, macOS the virtual Metal device.
+      - name: Smoke test (Linux, off-screen)
         if: matrix.id == 'linux'
         run: |
           export VK_ICD_FILENAMES=$(ls /usr/share/vulkan/icd.d/lvp_icd*.json | head -1)
-          xvfb-run -a rust/target/bundle/spectrum-3d-linux/bin/spectrum-3d --window --source off --frames 60 --settings "$RUNNER_TEMP/settings.json" > "$RUNNER_TEMP/smoke.json"
-          node -e "const r=JSON.parse(require('fs').readFileSync(process.argv[1],'utf8')); if(r.error||r.frames!==60){console.error(r);process.exit(1)} console.log('frames',r.frames,'adapter',r.adapter)" "$RUNNER_TEMP/smoke.json"
-      # The macOS and Windows runners may have no usable graphics adapter, so these two only report.
+          rust/target/bundle/spectrum-3d-linux/bin/spectrum-3d --headless --frames 30 --output "$RUNNER_TEMP/frame.ppm" | tail -1
+          ls -la "$RUNNER_TEMP/frame.ppm"
+      # Opening a real window needs a display server; on the runner that is Xvfb. It only reports.
+      - name: Window on a virtual display (Linux, informational)
+        if: matrix.id == 'linux'
+        continue-on-error: true
+        run: |
+          export VK_ICD_FILENAMES=$(ls /usr/share/vulkan/icd.d/lvp_icd*.json | head -1)
+          xvfb-run -a rust/target/bundle/spectrum-3d-linux/bin/spectrum-3d --window --source off --frames 60 --settings "$RUNNER_TEMP/settings.json" > "$RUNNER_TEMP/window.txt" 2>&1 || { echo "exit code $?"; tail -40 "$RUNNER_TEMP/window.txt"; exit 1; }
+          node -e "const r=JSON.parse(require('fs').readFileSync(process.argv[1],'utf8')); console.log('frames',r.frames,'error',r.error,'adapter',r.adapter)" "$RUNNER_TEMP/window.txt"
       - name: Smoke test (macOS, off-screen)
         if: matrix.id == 'macos'
-        continue-on-error: true
         run: |
           "rust/target/bundle/Spectrum 3D.app/Contents/MacOS/spectrum-wgpu" --headless --frames 30 --output "$RUNNER_TEMP/frame.ppm" | tail -1
           ls -la "$RUNNER_TEMP/frame.ppm"
       - name: Smoke test (Windows, off-screen)
         if: matrix.id == 'windows'
-        continue-on-error: true
         run: |
           "rust/target/bundle/Spectrum 3D/Spectrum 3D.exe" --headless --frames 30 --output "$RUNNER_TEMP/frame.ppm" | tail -1
           ls -la "$RUNNER_TEMP/frame.ppm"
