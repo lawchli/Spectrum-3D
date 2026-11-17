@@ -12,9 +12,9 @@
 
 ![ブラウザで表示したTungstenスタイル（3Dビュー）](images/en/tungsten-3d.jpg)
 
-| Dadaspecスタイル（3D） | Melスタイル（正面ビュー、ピーク表示付き） | Greenスタイル（上面ビュー） |
+| Dadaspecスタイル（3D） | Melスタイル（上面ビュー、Mel軸） | Greenスタイル（正面ビュー、ピーク表示付き） |
 |---|---|---|
-| ![Dadaspecスタイル（3Dビュー）](images/en/dadaspec-3d.jpg) | ![Melスタイル（正面ビュー、ピーク表示とピアノ鍵盤付き）](images/en/mel-front.jpg) | ![Greenスタイル（上面ビュー）](images/en/green-top.jpg) |
+| ![Dadaspecスタイル（3Dビュー）](images/en/dadaspec-3d.jpg) | ![Melスタイル（上面ビュー、Mel周波数軸）](images/en/mel-top.jpg) | ![Greenスタイル（正面ビュー、ピーク表示とピアノ鍵盤付き）](images/en/green-front.jpg) |
 
 ## 機能
 

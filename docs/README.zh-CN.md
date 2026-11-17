@@ -12,9 +12,9 @@
 
 ![网页版上的 Tungsten 风格立体视角](images/zh/tungsten-3d.jpg)
 
-| Dadaspec 风格，立体 | Mel 风格，正面，开着主峰读数 | Green 风格，俯视 |
+| Dadaspec 风格，立体 | Mel 风格，俯视，Mel 频率轴 | Green 风格，正面，开着主峰读数 |
 |---|---|---|
-| ![Dadaspec 风格，立体视角](images/zh/dadaspec-3d.jpg) | ![Mel 风格，正面视角，开着主峰读数和琴键刻度](images/zh/mel-front.jpg) | ![Green 风格，俯视视角](images/zh/green-top.jpg) |
+| ![Dadaspec 风格，立体视角](images/zh/dadaspec-3d.jpg) | ![Mel 风格，俯视视角，Mel 频率轴](images/zh/mel-top.jpg) | ![Green 风格，正面视角，开着主峰读数和琴键刻度](images/zh/green-front.jpg) |
 
 ## 功能
 
