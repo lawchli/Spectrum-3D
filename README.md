@@ -12,9 +12,13 @@ A real-time 3D audio spectrum analyzer for the browser, Android and the desktop.
 
 ![Tungsten style in 3D, in the browser](docs/images/en/tungsten-3d.jpg)
 
-| Dadaspec style, 3D | Mel style, top view on the Mel axis | Green style, front view with peak readout |
-|---|---|---|
-| ![Dadaspec style, 3D view](docs/images/en/dadaspec-3d.jpg) | ![Mel style, top view on the Mel frequency axis](docs/images/en/mel-top.jpg) | ![Green style, front view with peak readout and piano keys](docs/images/en/green-front.jpg) |
+<p>
+  <img src="docs/images/en/dadaspec-3d.jpg" width="32%" alt="Dadaspec style, 3D view">
+  <img src="docs/images/en/mel-top.jpg" width="32%" alt="Mel style, top view on the Mel frequency axis">
+  <img src="docs/images/en/green-front.jpg" width="32%" alt="Green style, front view with peak readout and piano keys">
+</p>
+
+From left to right: the Dadaspec style in 3D, the Mel style from the top on the Mel axis, and the Green style from the front with the peak readout and piano keys.
 
 ## Features
 
