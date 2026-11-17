@@ -32,7 +32,7 @@
 
 - **macOS**：解压，把 `Spectrum 3D.app` 放到想放的地方，右键点它选"打开"。macOS 15 及以上：先打开一次，再到"系统设置"的"隐私与安全性"里点"仍要打开"。也可以自己去掉下载标记：`xattr -dr com.apple.quarantine "Spectrum 3D.app"`。
 - **Windows**：把整个文件夹解压出来，运行 `Spectrum 3D.exe`。出现 SmartScreen 时点"更多信息"，再点"仍要运行"。
-- **Linux**：解压后运行 `bin/spectrum-3d`。`./install.sh` 会在应用菜单里加一个带图标的启动项（只对当前用户），`./install.sh --remove` 撤掉。
+- **Linux**：解压后运行 `bin/spectrum-3d`。`./install.sh` 会在应用菜单里加一个带图标的启动项（只对当前用户），`./install.sh --remove` 撤掉。需要 Vulkan 或 OpenGL 驱动；在 X11 上还需要 `libxkbcommon-x11` 库（如果提示这个库加载不了，Debian、Ubuntu 上 `sudo apt-get install libxkbcommon-x11-0`）。
 
 ## 功能
 
@@ -144,7 +144,7 @@ bash scripts/android-build.sh :spectrum:testDebugUnitTest
 | Intel UHD 730 上帧率一直在 33 帧左右，和设置无关 | Windows 桌面 |
 | 有两块显卡的机器会选到核显 | Windows 桌面 |
 | 把 WAV 或 FLAC 文件拖进窗口会卡死。拖 MP3、用"音频文件"按钮选任何格式都正常 | Windows 桌面 |
-| Windows、Linux 的安装包所用的代码，上一次在这两个系统上实际运行是几次改动之前。它们由自动流程编译和跑单元测试，没有人工测过 | Windows、Linux 桌面 |
+| Windows、Linux 的安装包所用的代码，上一次在真实的 Windows、Linux 桌面上运行是几次改动之前。它们由自动流程编译、跑单元测试、用软件渲染冒烟，没有人工测过 | Windows、Linux 桌面 |
 | 只在一台手机上测过（Sony XZ1 Compact，Android 16）。4 倍抗锯齿会让它的 GPU 驱动崩溃，所以默认关 | 安卓 |
 | 还没有 Dadaspec 风格、Mel 轴和倾斜 | 安卓 |
 | 安装包没有签名和公证 | macOS、Windows |

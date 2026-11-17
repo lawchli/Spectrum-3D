@@ -40,7 +40,7 @@ None of the desktop packages is signed with a paid developer certificate, so the
 
 - **macOS**: unzip, move `Spectrum 3D.app` where you want it, then right-click it and choose Open. On macOS 15 and later, open it once, then go to System Settings, Privacy & Security, and press "Open Anyway". Or remove the download mark yourself: `xattr -dr com.apple.quarantine "Spectrum 3D.app"`.
 - **Windows**: unzip the whole folder and run `Spectrum 3D.exe`. If SmartScreen appears, choose "More info", then "Run anyway".
-- **Linux**: unpack and run `bin/spectrum-3d`. `./install.sh` adds a launcher with the icon to your application menu (current user only), `./install.sh --remove` takes it out again.
+- **Linux**: unpack and run `bin/spectrum-3d`. `./install.sh` adds a launcher with the icon to your application menu (current user only), `./install.sh --remove` takes it out again. It needs a Vulkan or OpenGL driver and, on X11, the `libxkbcommon-x11` library (`sudo apt-get install libxkbcommon-x11-0` on Debian and Ubuntu if it reports that the library could not be loaded).
 
 ## Features
 
@@ -152,7 +152,7 @@ This is a beta. What is known not to work well:
 | On Intel UHD 730 the frame rate stayed near 33 whatever the settings | Windows desktop |
 | On a machine with two graphics cards the program picks the integrated one | Windows desktop |
 | Dropping a WAV or FLAC file onto the window froze it. MP3 by drag and drop, and every format through the "File" button, worked | Windows desktop |
-| The Windows and Linux packages are built from code that was last run on those systems a few changes ago. They are built and unit-tested automatically, not hand-tested | Windows, Linux desktop |
+| The Windows and Linux packages are built from code that was last run on real Windows and Linux desktops a few changes ago. They are built, unit-tested and smoke-tested with software rendering automatically, not hand-tested | Windows, Linux desktop |
 | Tested on one phone only (Sony XZ1 Compact, Android 16). 4× anti-aliasing crashed its GPU driver, so the default is off | Android |
 | No Dadaspec style, no Mel axis and no tilt yet | Android |
 | The packages are not signed or notarised | macOS, Windows |

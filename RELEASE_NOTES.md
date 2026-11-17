@@ -15,4 +15,6 @@ The desktop packages are not signed with a developer certificate or notarised:
 - macOS: right-click `Spectrum 3D.app` and choose Open. On macOS 15 and later, open it once, then press "Open Anyway" in System Settings, Privacy & Security.
 - Windows: unzip the whole folder, run `Spectrum 3D.exe`, and choose "More info", then "Run anyway" if SmartScreen appears.
 
-The Windows and Linux packages are built and unit-tested automatically but were not hand-tested for this release.
+- Linux: unpack and run `bin/spectrum-3d`. On X11 it needs the `libxkbcommon-x11` library (`libxkbcommon-x11-0` on Debian and Ubuntu).
+
+The Windows and Linux packages are built, unit-tested and smoke-tested with software rendering automatically, but were not hand-tested for this release.
